@@ -2,8 +2,13 @@ package com.appointr;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
-@SpringBootApplication
+/*
+ * TODO: remove exclude = {DataSourceAutoConfiguration.class}
+ *  after connecting to db
+ */
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
 public class AppointrApplication {
 
     public static void main(String[] args) {
