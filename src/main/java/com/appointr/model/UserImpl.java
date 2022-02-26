@@ -6,7 +6,7 @@ public class UserImpl implements User {
     private String username;
     private String password;
 
-    UserImpl(String id, String email, String username, String password) {
+    public UserImpl(String id, String email, String username, String password) {
         this.id = id;
         this.email = email;
         this.username = username;

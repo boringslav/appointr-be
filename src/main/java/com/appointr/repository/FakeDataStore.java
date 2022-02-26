@@ -1,0 +1,30 @@
+package com.appointr.repository;
+
+import com.appointr.model.User;
+import com.appointr.model.UserImpl;
+
+import java.util.*;
+
+public class FakeDataStore {
+    private final List<User> userList = new ArrayList<>();
+
+    public FakeDataStore() {
+        User bobcho = new UserImpl("1", "nznznz@gmai.com","bobcho", "bobcho");
+        User bobcho1 = new UserImpl("11", "nznznz@gmai.com","bobcho1", "bobcho1");
+
+        userList.add(bobcho);
+        userList.add(bobcho1);
+    }
+
+    public List<User> getUsers() {
+        return this.userList;
+    }
+    public User getUser(String userId) {
+        for (User user : userList) {
+            if (user.getID().equals(userId)) {
+                return user;
+            }
+        }
+        return null;
+    }
+}
