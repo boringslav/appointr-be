@@ -2,9 +2,10 @@ package com.appointr.repository;
 
 import com.appointr.model.User;
 import com.appointr.model.UserImpl;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
-
+@Component
 public class FakeDataStore {
     private final List<User> userList = new ArrayList<>();
 

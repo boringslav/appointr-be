@@ -2,6 +2,7 @@ package com.appointr.controllers;
 
 import com.appointr.model.User;
 import com.appointr.repository.FakeDataStore;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,8 +12,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UsersController {
-    //this has to be static because web services are stateless
-    private static final FakeDataStore fakeDataStore = new FakeDataStore();
+    private FakeDataStore fakeDataStore;
+    @Autowired
+    public UsersController(FakeDataStore fakeDataStore) {
+        this.fakeDataStore = fakeDataStore;
+    }
 
     @GetMapping
     public ResponseEntity<List<User>> getUsers() {
@@ -29,13 +33,8 @@ public class UsersController {
         User user = fakeDataStore.getUser(id);
         if (user != null) {
             return ResponseEntity.ok().body(user);
-        }else {
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
-    /**
-     * TODO return all users
-     * TODO return an user
-     * TODO OOP with Java Book
-     */
 }
