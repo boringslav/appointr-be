@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+@CrossOrigin //TODO: look for a global cors configuration
 @RestController
 @RequestMapping("/users")
 public class UsersController {
