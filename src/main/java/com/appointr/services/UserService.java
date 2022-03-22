@@ -3,7 +3,6 @@ package com.appointr.services;
 import com.appointr.model.User;
 import com.appointr.repository.FakeDataStore;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

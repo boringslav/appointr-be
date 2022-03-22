@@ -1,7 +1,7 @@
 package com.appointr.controllers;
 
 import org.springframework.web.bind.annotation.*;
-@CrossOrigin //TODO: look for a global cors configuration
+@CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("/sign-in")
 
