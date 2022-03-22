@@ -12,7 +12,7 @@ The JavaScript world is a rich environment with hundreds of tools, libraries, an
 
 ## Step 2: Create the main question
 
-\***\*Which Front End framework/library is the best?\*\***
+**Which Front End framework/library is the best?**
 
 ## Step 3: Create sub-questions
 
