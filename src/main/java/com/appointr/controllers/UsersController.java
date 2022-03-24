@@ -1,5 +1,6 @@
 package com.appointr.controllers;
 
+import com.appointr.exception.ApiRequestException;
 import com.appointr.model.User;
 import com.appointr.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class UsersController {
         if (user != null) {
             return ResponseEntity.ok().body(user);
         } else {
-            return ResponseEntity.notFound().build();
+            throw new ApiRequestException("User Does not exist");
         }
     }
 }
