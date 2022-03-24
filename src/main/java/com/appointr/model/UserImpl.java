@@ -1,18 +1,15 @@
 package com.appointr.model;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public class UserImpl implements User {
     private final String id;
     private String email;
-    private String username;
+    private String firstName;
+    private String lastName;
     private String password;
 
-    public UserImpl(String id, String email, String username, String password) {
-        this.id = id;
-        this.email = email;
-        this.username = username;
-        this.password = password;
-
-    }
 
     /**
      * @return the id of this user. The ID should not be blank or null
@@ -31,11 +28,27 @@ public class UserImpl implements User {
     }
 
     /**
-     * @return the username of this user. The username should not be blank or null
+     * @return the first name of this user. The first name should not be blank or null
      */
     @Override
-    public String getUsername() {
-        return this.username;
+    public String getFirstName() {
+        return this.firstName;
+    }
+
+    /**
+     * @return the last name of this user. The last name should not be blank or null
+     */
+    @Override
+    public String getLastName() {
+        return this.lastName;
+    }
+
+    /**
+     * @return the full name of this user. The full name should not be blank or null
+     */
+    @Override
+    public String getFullName() {
+        return this.firstName + " " + this.lastName;
     }
 
     /**

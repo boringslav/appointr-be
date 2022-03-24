@@ -12,10 +12,19 @@ public interface User {
     String getEmail();
 
     /**
-     * @return the username of this user. The username should not be blank or null
+     * @return the first name of this user. The first name should not be blank or null
      */
-    String getUsername();
+    String getFirstName();
 
+    /**
+     * @return  the last name of this user. The last name should not be blank or null
+     */
+    String getLastName();
+
+    /**
+     * @return the full name of this user. The full name should not be blank or null
+     */
+    String getFullName();
 
     /**
      * @return the password of the user. The password should not be blank or null

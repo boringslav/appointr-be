@@ -1,12 +1,10 @@
 package com.appointr.controllers;
 
 import com.appointr.model.User;
-import com.appointr.repository.FakeDataStore;
 import com.appointr.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @CrossOrigin("http://localhost:3000")
