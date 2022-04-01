@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123
-      POSTFRES_DB: appointr
+      POSTGRES_DB: appointr
     networks:
       - appointr
 networks:
