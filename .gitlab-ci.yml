@@ -5,7 +5,7 @@ stages:
 build:
   stage: build
   script:
-    - ./gradlew build -x test
+    - ./gradlew build --stacktrace -x test
     - ./gradlew.bat --stop
 
 test:
