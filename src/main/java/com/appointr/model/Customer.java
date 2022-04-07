@@ -36,4 +36,9 @@ public class Customer {
     @Email
     @Column(name="email")
     private String email;
+
+    @NotBlank
+    @Length(min=6, max=20)
+    @Column(name="password")
+    private String password;
 }
