@@ -34,7 +34,7 @@ public class Customer {
 
     @NotBlank
     @Email
-    @Column(name="email")
+    @Column(name="email", unique = true)
     private String email;
 
     @NotBlank
