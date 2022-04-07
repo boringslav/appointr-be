@@ -1,6 +1,6 @@
 package com.appointr.dto.customer;
 
-import com.appointr.model.Customer;
+import com.appointr.repository.entity.Customer;
 
 public class CustomerDTOConverter {
     private CustomerDTOConverter() {

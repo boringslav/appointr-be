@@ -1,6 +1,6 @@
 package com.appointr.repository;
 
-import com.appointr.model.Customer;
+import com.appointr.repository.entity.Customer;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

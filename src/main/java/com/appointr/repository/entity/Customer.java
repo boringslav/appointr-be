@@ -1,4 +1,4 @@
-package com.appointr.model;
+package com.appointr.repository.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
