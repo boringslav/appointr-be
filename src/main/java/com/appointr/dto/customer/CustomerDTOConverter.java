@@ -12,6 +12,7 @@ public class CustomerDTOConverter {
                 .email(customer.getEmail())
                 .firstName(customer.getFirstName())
                 .lastName(customer.getLastName())
+                .password(customer.getPassword())
                 .build();
     }
 }
