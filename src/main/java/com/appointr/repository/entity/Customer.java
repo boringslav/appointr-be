@@ -1,4 +1,4 @@
-package com.appointr.model;
+package com.appointr.repository.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,6 +34,11 @@ public class Customer {
 
     @NotBlank
     @Email
-    @Column(name="email")
+    @Column(name="email", unique = true)
     private String email;
+
+    @NotBlank
+    @Length(min=6, max=20)
+    @Column(name="password")
+    private String password;
 }
