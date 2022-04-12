@@ -8,8 +8,6 @@ import com.appointr.dto.customer.GetAllCustomersResponseDTO;
 import com.appointr.services.customer.CustomerSignUp;
 import com.appointr.services.customer.GetCustomerById;
 import com.appointr.services.customer.GetCustomers;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

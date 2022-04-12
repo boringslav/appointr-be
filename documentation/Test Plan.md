@@ -5,7 +5,7 @@ This test plan specifies the testing approach, strategy, quality objective and t
 The plan identifies the approaches that will be taken, types of testing that will be done. Majority of the tests can be automated which results in less time-consuming development. However, some tests, such as User Acceptance Testing have to be tested by a human, which might be more time consuming, The mixture of both automated and humen tests give the greatest results.
 
 ## Testing Strategy
-I inted to use a mixture of tests, including unit tests, integration tests and user acceptance tests. Below you will find an overview of the test types, the purpose of the test and the tester (person or a program)
+I intend to use a mixture of tests, including unit tests, integration tests and user acceptance tests. Below you will find an overview of the test types, the purpose of the test and the tester (person or a program)
 
 | Test                    | Purpose                                                                                                                                                                                                  | Tester                                                                                  |
 | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
