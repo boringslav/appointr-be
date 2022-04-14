@@ -16,6 +16,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
+/**
+ * When removing the AutoconfigureTestDatabase -> the tests are not working
+ * Application.properties file with test db connection is ready
+ */
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class CustomerRepositoryTest {
     @Autowired

@@ -10,5 +10,16 @@ services:
       POSTGRES_DB: appointr
     networks:
       - appointr
+  test-db:
+    image: postgres:13
+    ports:
+      - 5437:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: appointrTest
+    networks:
+      - appointrTest
 networks:
   appointr:
+  appointrTest:
