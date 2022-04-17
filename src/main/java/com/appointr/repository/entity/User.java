@@ -11,12 +11,12 @@ import javax.validation.constraints.NotBlank;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "customer")
+@Table(name = "users")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Customer {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -24,13 +24,8 @@ public class Customer {
 
     @NotBlank
     @Length(min = 2, max = 20)
-    @Column(name = "firstName")
-    private String firstName;
-
-    @NotBlank
-    @Length(min = 2, max = 20)
-    @Column(name = "lastName")
-    private String lastName;
+    @Column(name = "name")
+    private String name;
 
     @NotBlank
     @Email
