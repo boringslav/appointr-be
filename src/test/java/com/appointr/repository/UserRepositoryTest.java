@@ -1,5 +1,7 @@
 package com.appointr.repository;
 
+import com.appointr.dto.user.GetAllUsersResponseDTO;
+import com.appointr.dto.user.UserDTO;
 import com.appointr.repository.entity.User;
 import com.appointr.repository.entity.UserRole;
 import org.junit.jupiter.api.Test;
@@ -11,6 +13,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.persistence.EntityManager;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
@@ -19,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserRepositoryTest {
 
     @Autowired
+
     private UserRepository userRepository;
 
     @Autowired

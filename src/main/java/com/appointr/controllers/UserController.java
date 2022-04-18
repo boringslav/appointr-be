@@ -1,6 +1,8 @@
 package com.appointr.controllers;
 
 
+import com.appointr.dto.user.GetAllUsersResponseDTO;
+import com.appointr.dto.user.UserDTO;
 import com.appointr.dto.user.UserSignUpRequestDTO;
 import com.appointr.dto.user.UserSignUpResponseDTO;
 import com.appointr.services.user.UserService;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @CrossOrigin("http://localhost:3000")
@@ -19,6 +22,11 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
+
+    @GetMapping
+    public ResponseEntity<GetAllUsersResponseDTO> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
+    }
 
     @PostMapping("/sign-up")
     public ResponseEntity<UserSignUpResponseDTO> signUp(
