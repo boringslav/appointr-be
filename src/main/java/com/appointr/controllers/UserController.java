@@ -5,7 +5,6 @@ import com.appointr.dto.user.UserSignUpRequestDTO;
 import com.appointr.dto.user.UserSignUpResponseDTO;
 import com.appointr.services.user.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

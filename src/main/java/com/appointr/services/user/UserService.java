@@ -4,6 +4,7 @@ import com.appointr.dto.user.UserSignUpRequestDTO;
 import com.appointr.dto.user.UserSignUpResponseDTO;
 import com.appointr.repository.UserRepository;
 import com.appointr.repository.entity.User;
+import com.appointr.repository.entity.UserRole;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,10 @@ public class UserService {
                 .name(requestDTO.getName())
                 .role(requestDTO.getRole())
                 .build();
-        System.out.println(newUser.toString());
+
+        if(newUser.getRole() == null) {
+            newUser.setRole(UserRole.CUSTOMER);
+        }
 
         User savedUser = userRepository.save(newUser);
 

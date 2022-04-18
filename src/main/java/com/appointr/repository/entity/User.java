@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "users")
@@ -37,6 +38,7 @@ public class User {
     @Column(name="password")
     private String password;
 
+    @NotNull
     @Builder.Default
     @Column(length=20, name="role", columnDefinition = "VARCHAR(20) default 'CUSTOMER' ")
     @Enumerated(EnumType.STRING)
