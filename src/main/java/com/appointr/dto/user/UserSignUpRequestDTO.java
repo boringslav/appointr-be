@@ -1,36 +1,24 @@
-package com.appointr.repository.entity;
+package com.appointr.dto.user;
 
+import com.appointr.repository.entity.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.persistence.*;
 
-@Entity
-@Table(name = "customer")
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class Customer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
-
+@AllArgsConstructor
+public class UserSignUpRequestDTO {
     @NotBlank
-    @Length(min = 2, max = 20)
-    @Column(name = "firstName")
-    private String firstName;
-
-    @NotBlank
-    @Length(min = 2, max = 20)
-    @Column(name = "lastName")
-    private String lastName;
+    @Length(min = 2)
+    private String name;
 
     @NotBlank
     @Email
@@ -41,4 +29,8 @@ public class Customer {
     @Length(min=6, max=20)
     @Column(name="password")
     private String password;
+
+    @Column(name="role")
+    private UserRole role;
+
 }

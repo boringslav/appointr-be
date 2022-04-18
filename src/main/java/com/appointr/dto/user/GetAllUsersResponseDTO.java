@@ -1,5 +1,6 @@
-package com.appointr.dto.customer;
+package com.appointr.dto.user;
 
+import com.appointr.repository.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +12,6 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetAllCustomersResponseDTO {
-    private List<CustomerDTO> customers;
+public class GetAllUsersResponseDTO {
+    private List<UserDTO> users;
 }
