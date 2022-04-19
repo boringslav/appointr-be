@@ -1,5 +1,6 @@
 package com.appointr.repository.entity;
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,34 +10,35 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 @Entity
-@Table(name = "users")
+@Table(name = "bookings")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
+    @NotBlank
     @Length(min = 2, max = 20)
-    @Column(name = "name")
-    private String name;
+    @Column(name = "title")
+    private String title;
 
-    @Email
-    @Column(name="email", unique = true)
-    private String email;
+    @Length(min = 10, max = 50)
+    @Column(name = "description")
+    private String description;
 
-    @Length(min=6, max=20)
-    @Column(name="password")
-    private String password;
+    @OneToOne
+    @JoinColumn(name = "creator", referencedColumnName = "id")
+    private User creator;
 
-    @Builder.Default
-    @Column(length=20, name="role", columnDefinition = "VARCHAR(20) default 'CUSTOMER' ")
-    @Enumerated(EnumType.STRING)
-    private UserRole role = UserRole.CUSTOMER;
+    @OneToOne
+    @JoinColumn(name = "customer", referencedColumnName = "id")
+    private User customer;
+
 }
