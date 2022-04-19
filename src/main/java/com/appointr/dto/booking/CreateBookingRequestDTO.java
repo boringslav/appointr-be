@@ -24,5 +24,7 @@ public class CreateBookingRequestDTO {
     private String description;
 
     @NotNull
-    private Long userId;
+    private User creator;
+
+    private User customer;
 }

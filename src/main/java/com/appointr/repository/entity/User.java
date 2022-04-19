@@ -23,22 +23,18 @@ public class User {
     @Column(name = "id")
     private Long id;
 
-    @NotBlank
     @Length(min = 2, max = 20)
     @Column(name = "name")
     private String name;
 
-    @NotBlank
     @Email
     @Column(name="email", unique = true)
     private String email;
 
-    @NotBlank
     @Length(min=6, max=20)
     @Column(name="password")
     private String password;
 
-    @NotNull
     @Builder.Default
     @Column(length=20, name="role", columnDefinition = "VARCHAR(20) default 'CUSTOMER' ")
     @Enumerated(EnumType.STRING)

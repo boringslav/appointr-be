@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateBookingResponseDTO {
-    private String bookingId;
+    private Long bookingId;
 }

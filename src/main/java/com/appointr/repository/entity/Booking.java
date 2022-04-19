@@ -10,6 +10,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "bookings")
@@ -32,13 +33,12 @@ public class Booking {
     @Column(name = "description")
     private String description;
 
-    @NotBlank
     @OneToOne
-    @JoinColumn(name = "creator_id", referencedColumnName = "id")
-    private User creatorId;
+    @JoinColumn(name = "creator", referencedColumnName = "id")
+    private User creator;
 
     @OneToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    private User customer_id;
+    @JoinColumn(name = "customer", referencedColumnName = "id")
+    private User customer;
 
 }
