@@ -1,6 +1,5 @@
 package com.appointr.dto.user;
 
-import com.appointr.repository.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
