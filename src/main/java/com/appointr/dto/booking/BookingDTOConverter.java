@@ -4,6 +4,11 @@ import com.appointr.dto.user.UserDTOConverter;
 import com.appointr.repository.entity.Booking;
 
 public class BookingDTOConverter {
+
+    private BookingDTOConverter() {
+
+    };
+
     public static BookingDTO convertToDTO(Booking booking) {
 
 
