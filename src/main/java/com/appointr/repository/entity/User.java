@@ -9,7 +9,6 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "users")
@@ -23,20 +22,23 @@ public class User {
     @Column(name = "id")
     private Long id;
 
+    @NotBlank
     @Length(min = 2, max = 20)
     @Column(name = "name")
     private String name;
 
+    @NotBlank
     @Email
-    @Column(name="email", unique = true)
+    @Column(name = "email", unique = true)
     private String email;
 
-    @Length(min=6, max=20)
-    @Column(name="password")
+    @NotBlank
+    @Length(min = 6, max = 20)
+    @Column(name = "password")
     private String password;
 
     @Builder.Default
-    @Column(length=20, name="role", columnDefinition = "VARCHAR(20) default 'CUSTOMER' ")
+    @Column(length = 20, name = "role", columnDefinition = "VARCHAR(20) default 'CUSTOMER' ")
     @Enumerated(EnumType.STRING)
     private UserRole role = UserRole.CUSTOMER;
 }
