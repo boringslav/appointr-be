@@ -12,7 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 
-@CrossOrigin
+@CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("/bookings")
 @AllArgsConstructor
