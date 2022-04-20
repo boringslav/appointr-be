@@ -1,7 +1,6 @@
 package com.appointr.dto.booking;
 
 import com.appointr.dto.user.UserDTO;
-import com.appointr.repository.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
