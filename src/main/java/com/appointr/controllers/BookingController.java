@@ -3,7 +3,7 @@ package com.appointr.controllers;
 import com.appointr.dto.booking.CreateBookingRequestDTO;
 import com.appointr.dto.booking.CreateBookingResponseDTO;
 import com.appointr.dto.booking.GetAllBookingsResponseDTO;
-import com.appointr.services.booking.BookingService;
+import com.appointr.services.booking.impl.BookingServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ import javax.validation.Valid;
 @AllArgsConstructor
 public class BookingController {
 
-    private final BookingService bookingService;
+    private final BookingServiceImpl bookingService;
 
     @GetMapping
     public ResponseEntity<GetAllBookingsResponseDTO> getAllBookings() {
