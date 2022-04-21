@@ -1,9 +1,7 @@
 package com.appointr.services.booking.impl;
 
-import com.appointr.dto.booking.BookingDTOConverter;
-import com.appointr.dto.booking.CreateBookingRequestDTO;
-import com.appointr.dto.booking.CreateBookingResponseDTO;
-import com.appointr.dto.booking.GetAllBookingsResponseDTO;
+import com.appointr.dto.booking.*;
+import com.appointr.dto.user.UserDTOConverter;
 import com.appointr.repository.BookingRepository;
 import com.appointr.repository.UserRepository;
 import com.appointr.repository.entity.Booking;
@@ -14,8 +12,10 @@ import com.google.common.collect.Streams;
 import lombok.AllArgsConstructor;
 import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
+import java.awt.print.Book;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -31,10 +31,10 @@ public class BookingServiceImpl implements BookingService {
 
         Optional<User> foundUser = userRepository.findById(requestDTO.getCreator().getId());
 
-        if(foundUser.isEmpty()) {
+        if (foundUser.isEmpty()) {
             throw new AuthenticationException("User does not exists");
         }
-        if(foundUser.get().getRole() == UserRole.CUSTOMER) {
+        if (foundUser.get().getRole() == UserRole.CUSTOMER) {
             throw new AuthenticationException("You don`t have permissions to do that!");
         }
 
@@ -56,6 +56,26 @@ public class BookingServiceImpl implements BookingService {
         response.setBookings(Streams.stream(results)
                 .map(BookingDTOConverter::convertToDTO)
                 .collect(Collectors.toList()));
+
+        return response;
+    }
+
+    public BookingDTO getBookingById(Long id) throws Exception {
+        Optional<Booking> foundBooking = bookingRepository.findById(id);
+
+        if (foundBooking.isEmpty()) {
+            throw new Exception("Booking Not Found");
+        }
+
+        Booking booking = foundBooking.get();
+
+        final BookingDTO response = BookingDTO.builder()
+                .id(booking.getId())
+                .title(booking.getTitle())
+                .description(booking.getDescription())
+                .creator(UserDTOConverter.convertToDTO(booking.getCreator()))
+                .customer(UserDTOConverter.convertToDTO(booking.getCreator()))
+                .build();
 
         return response;
     }

@@ -1,8 +1,10 @@
 package com.appointr.controllers;
 
+import com.appointr.dto.booking.BookingDTO;
 import com.appointr.dto.booking.CreateBookingRequestDTO;
 import com.appointr.dto.booking.CreateBookingResponseDTO;
 import com.appointr.dto.booking.GetAllBookingsResponseDTO;
+import com.appointr.dto.user.UserDTO;
 import com.appointr.services.booking.impl.BookingServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,9 +27,18 @@ public class BookingController {
         try {
             GetAllBookingsResponseDTO bookings = bookingService.getAllBookings();
             return ResponseEntity.ok(bookings);
-        }
-        catch (Exception err) {
+        } catch (Exception err) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, err.getMessage());
+        }
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<BookingDTO> getBookingById(@PathVariable(value = "id") final long id) {
+        try {
+            final BookingDTO foundBooking = bookingService.getBookingById(id);
+            return ResponseEntity.ok(foundBooking);
+        } catch (Exception err) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, err.getMessage());
         }
     }
 
