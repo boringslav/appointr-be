@@ -78,6 +78,7 @@ public class BookingServiceImpl implements BookingService {
         return response;
     }
 
+    //TODO - Check if the user who wants to update the booking is its creator
     public CreateBookingResponseDTO updateBooking(Long id, UpdateBookingDataDTO newBookingData) throws Exception {
         Optional<Booking> oldBooking = bookingRepository.findById(id);
 
@@ -94,6 +95,20 @@ public class BookingServiceImpl implements BookingService {
         return CreateBookingResponseDTO.builder()
                 .bookingId(booking.getId()).build();
 
+    }
+
+    /**
+     * TODO - Check if the user who wants to update the booking is its creator
+     * TODO -
+     * @param id
+     * @throws Exception
+     * could not execute statement; SQL [n/a]; constraint [fk63yud1c4pbg7n9xgtajdqrp3v];
+     * nested exception is org.hibernate.exception.ConstraintViolationException:
+     * could not execute statement
+     */
+    @Transactional
+    public void deleteBooking(Long id) throws  Exception{
+        userRepository.deleteById(id);
     }
 
 }

@@ -58,10 +58,23 @@ public class BookingController {
             @RequestBody UpdateBookingDataDTO bookingData) {
 
         try {
-          CreateBookingResponseDTO response =  bookingService.updateBooking(id,bookingData);
-          return ResponseEntity.status(HttpStatus.CREATED).body(response);
+            CreateBookingResponseDTO response = bookingService.updateBooking(id, bookingData);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (Exception err) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, err.getMessage());
+        }
+
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity deleteBooking(
+            @PathVariable(value = "id") final long id
+    ) {
+        try {
+            bookingService.deleteBooking(id);
+            return ResponseEntity.status(HttpStatus.OK).body("Booking successfully deleted!");
+        } catch (Exception err) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, err.getMessage());
         }
 
     }
