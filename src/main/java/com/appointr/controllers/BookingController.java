@@ -1,10 +1,8 @@
 package com.appointr.controllers;
 
-import com.appointr.dto.booking.BookingDTO;
-import com.appointr.dto.booking.CreateBookingRequestDTO;
-import com.appointr.dto.booking.CreateBookingResponseDTO;
-import com.appointr.dto.booking.GetAllBookingsResponseDTO;
+import com.appointr.dto.booking.*;
 import com.appointr.dto.user.UserDTO;
+import com.appointr.repository.entity.Booking;
 import com.appointr.services.booking.impl.BookingServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -52,6 +50,33 @@ public class BookingController {
         } catch (Exception err) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, err.getMessage());
         }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<CreateBookingResponseDTO> updateBooking(
+            @PathVariable(value = "id") final long id,
+            @RequestBody UpdateBookingDataDTO bookingData) {
+
+        try {
+            CreateBookingResponseDTO response = bookingService.updateBooking(id, bookingData);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch (Exception err) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, err.getMessage());
+        }
+
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity deleteBooking(
+            @PathVariable(value = "id") final long id
+    ) {
+        try {
+            bookingService.deleteBooking(id);
+            return ResponseEntity.status(HttpStatus.OK).body("Booking successfully deleted!");
+        } catch (Exception err) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, err.getMessage());
+        }
+
     }
 
 }

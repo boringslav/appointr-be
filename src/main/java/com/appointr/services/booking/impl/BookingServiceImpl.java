@@ -12,10 +12,8 @@ import com.google.common.collect.Streams;
 import lombok.AllArgsConstructor;
 import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
-import java.awt.print.Book;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -78,6 +76,39 @@ public class BookingServiceImpl implements BookingService {
                 .build();
 
         return response;
+    }
+
+    //TODO - Check if the user who wants to update the booking is its creator
+    public CreateBookingResponseDTO updateBooking(Long id, UpdateBookingDataDTO newBookingData) throws Exception {
+        Optional<Booking> oldBooking = bookingRepository.findById(id);
+
+        if (oldBooking.isEmpty()) {
+            throw new Exception("Booking Not Found");
+        }
+
+        Booking booking = oldBooking.get();
+        booking.setTitle(newBookingData.getTitle());
+        booking.setDescription(newBookingData.getDescription());
+
+        booking = bookingRepository.save(booking);
+
+        return CreateBookingResponseDTO.builder()
+                .bookingId(booking.getId()).build();
+
+    }
+
+    /**
+     * TODO - Check if the user who wants to update the booking is its creator
+     * TODO -
+     * @param id
+     * @throws Exception
+     * could not execute statement; SQL [n/a]; constraint [fk63yud1c4pbg7n9xgtajdqrp3v];
+     * nested exception is org.hibernate.exception.ConstraintViolationException:
+     * could not execute statement
+     */
+    @Transactional
+    public void deleteBooking(Long id) throws  Exception{
+        userRepository.deleteById(id);
     }
 
 }
