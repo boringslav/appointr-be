@@ -14,6 +14,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -28,11 +29,12 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findUserByEmail(email);
-        if(user == null) {
+        if (user == null) {
             throw new UsernameNotFoundException("User not found in the database");
         }
 
@@ -45,12 +47,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserSignUpResponseDTO signUp(UserSignUpRequestDTO requestDTO) {
         User newUser = User.builder()
                 .email(requestDTO.getEmail())
-                .password(requestDTO.getPassword())
+                .password(passwordEncoder.encode(requestDTO.getPassword()))
                 .name(requestDTO.getName())
                 .role(requestDTO.getRole())
                 .build();
 
-        if(newUser.getRole() == null) {
+        if (newUser.getRole() == null) {
             newUser.setRole(UserRole.CUSTOMER);
         }
 
