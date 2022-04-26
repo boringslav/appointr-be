@@ -1,6 +1,7 @@
 package com.appointr.config;
 
 import com.appointr.filter.CustomAuthenticationFilter;
+import com.appointr.filter.CustomAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static org.springframework.http.HttpMethod.POST;
 
@@ -35,12 +37,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/users/sign-in/**").permitAll();
-        http.authorizeRequests().antMatchers("/users/sign-up/**").permitAll();
+        http.authorizeRequests().antMatchers("/users/sign-in").permitAll();
+        http.authorizeRequests().antMatchers("/users/sign-up").permitAll();
         http.authorizeRequests().antMatchers(POST, "/bookings/new").hasAnyAuthority("COMPANY", "ADMIN");
         http.authorizeRequests().anyRequest().authenticated();
 
         http.addFilter(customAuthenticationFilter);
+        http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
