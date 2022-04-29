@@ -31,13 +31,11 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        /**
-         * Pass the request without filtering if user wants to sign-in or sign-up
-         */
         if (request.getServletPath().equals("/users/sign-in") || request.getServletPath().equals("/users/sign-in")) {
             filterChain.doFilter(request, response);
         } else {
             String authorizationHeader = request.getHeader(AUTHORIZATION);
+
             if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
 
                 try {
@@ -47,12 +45,15 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     JWTVerifier verifier = JWT.require(algorithm).build();
                     DecodedJWT decodedJWT = verifier.verify(token);
                     String username = decodedJWT.getSubject();
-                    String role = decodedJWT.getClaim("role").toString();
+                    String role = decodedJWT.getClaim("role").asString();
                     log.info("Username: {}", username);
-                    log.info("Role: {}", decodedJWT.getClaim("role"));
+                    log.info("Role: {}", role);
+
+                    log.info("Role is COMPANY: {}", role.equals("COMPANY"));
                     Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
                     authorities.add(new SimpleGrantedAuthority(role));
+                    log.info("Authorities: {}", authorities);
 
 
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorities);

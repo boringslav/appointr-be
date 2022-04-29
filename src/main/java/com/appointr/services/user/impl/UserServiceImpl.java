@@ -10,6 +10,7 @@ import com.appointr.repository.entity.UserRole;
 import com.appointr.services.user.UserService;
 import com.google.common.collect.Streams;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 @Transactional
+@Slf4j
 
 public class UserServiceImpl implements UserService, UserDetailsService {
 
@@ -37,7 +39,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found in the database");
         }
-
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(user.getRole().toString()));
 
