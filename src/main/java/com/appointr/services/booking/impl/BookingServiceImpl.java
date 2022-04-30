@@ -32,9 +32,9 @@ public class BookingServiceImpl implements BookingService {
         if (foundUser.isEmpty()) {
             throw new AuthenticationException("User does not exists");
         }
-        if (foundUser.get().getRole() == UserRole.CUSTOMER) {
-            throw new AuthenticationException("You don`t have permissions to do that!");
-        }
+//        if (foundUser.get().getRole() == UserRole.CUSTOMER) {
+//            throw new AuthenticationException("You don`t have permissions to do that!");
+//        }
 
         Booking newBooking = Booking.builder()
                 .title(requestDTO.getTitle())

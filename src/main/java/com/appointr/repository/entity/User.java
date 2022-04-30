@@ -23,7 +23,6 @@ public class User {
     private Long id;
 
     @NotBlank
-    @Length(min = 2, max = 20)
     @Column(name = "name")
     private String name;
 
@@ -33,7 +32,6 @@ public class User {
     private String email;
 
     @NotBlank
-    @Length(min = 6, max = 20)
     @Column(name = "password")
     private String password;
 
