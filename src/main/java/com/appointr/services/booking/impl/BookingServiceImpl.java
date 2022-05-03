@@ -10,7 +10,12 @@ import com.appointr.repository.entity.UserRole;
 import com.appointr.services.booking.BookingService;
 import com.google.common.collect.Streams;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.websocket.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -19,6 +24,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class BookingServiceImpl implements BookingService {
 
     private final BookingRepository bookingRepository;
@@ -27,19 +33,14 @@ public class BookingServiceImpl implements BookingService {
     @Transactional
     public CreateBookingResponseDTO createBooking(CreateBookingRequestDTO requestDTO) throws AuthenticationException {
 
-        Optional<User> foundUser = userRepository.findById(requestDTO.getCreator().getId());
-
-        if (foundUser.isEmpty()) {
-            throw new AuthenticationException("User does not exists");
-        }
-//        if (foundUser.get().getRole() == UserRole.CUSTOMER) {
-//            throw new AuthenticationException("You don`t have permissions to do that!");
-//        }
+        String loggedInUserEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        log.info("User : {}", loggedInUserEmail);
+        User foundUser = userRepository.findUserByEmail(loggedInUserEmail);
 
         Booking newBooking = Booking.builder()
                 .title(requestDTO.getTitle())
                 .description(requestDTO.getDescription())
-                .creator(foundUser.get())
+                .creator(foundUser)
                 .build();
 
         Booking savedBooking = bookingRepository.save(newBooking);
