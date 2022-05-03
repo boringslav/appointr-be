@@ -22,9 +22,4 @@ public class CreateBookingRequestDTO {
     @NotBlank
     @Length(min = 10, max = 50)
     private String description;
-
-    @NotNull
-    private User creator;
-
-    private User customer;
 }
