@@ -30,7 +30,6 @@ public class BookingServiceImpl implements BookingService {
     public CreateBookingResponseDTO createBooking(CreateBookingRequestDTO requestDTO) throws AuthenticationException {
 
         String loggedInUserEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        log.info("User : {}", loggedInUserEmail);
         User foundUser = userRepository.findUserByEmail(loggedInUserEmail);
 
         Booking newBooking = Booking.builder()
@@ -79,9 +78,17 @@ public class BookingServiceImpl implements BookingService {
     public CreateBookingResponseDTO updateBooking(Long id, UpdateBookingRequestDTO newBookingData) throws Exception {
         Optional<Booking> oldBooking = bookingRepository.findById(id);
 
+        String loggedInUserEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+
         if (oldBooking.isEmpty()) {
             throw new Exception("Booking Not Found");
         }
+
+        if (!loggedInUserEmail.equals(oldBooking.get().getCreator().getEmail())) {
+            throw new Exception("You are not the creator of the booking!");
+        }
+
 
         Booking booking = oldBooking.get();
         booking.setTitle(newBookingData.getTitle());
@@ -97,14 +104,14 @@ public class BookingServiceImpl implements BookingService {
     /**
      * TODO - Check if the user who wants to update the booking is its creator
      * TODO -
+     *
      * @param id
-     * @throws Exception
-     * could not execute statement; SQL [n/a]; constraint [fk63yud1c4pbg7n9xgtajdqrp3v];
-     * nested exception is org.hibernate.exception.ConstraintViolationException:
-     * could not execute statement
+     * @throws Exception could not execute statement; SQL [n/a]; constraint [fk63yud1c4pbg7n9xgtajdqrp3v];
+     *                   nested exception is org.hibernate.exception.ConstraintViolationException:
+     *                   could not execute statement
      */
     @Transactional
-    public void deleteBooking(Long id) throws  Exception{
+    public void deleteBooking(Long id) throws Exception {
         userRepository.deleteById(id);
     }
 
