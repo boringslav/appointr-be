@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -16,4 +18,5 @@ public class BookingDTO {
     private String description;
     private UserDTO creator;
     private UserDTO customer;
+    private String bookingDate;
 }

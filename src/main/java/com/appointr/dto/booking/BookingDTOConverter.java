@@ -18,6 +18,7 @@ public class BookingDTOConverter {
                 .customer(booking.getCustomer() == null ? null : UserDTOConverter.convertToDTO(booking.getCustomer()))
                 .title(booking.getTitle())
                 .description(booking.getDescription())
+                .bookingDate(booking.getBookingDate())
                 .build();
     }
 }

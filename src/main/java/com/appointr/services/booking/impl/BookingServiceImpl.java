@@ -14,7 +14,13 @@ import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Temporal;
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -32,11 +38,16 @@ public class BookingServiceImpl implements BookingService {
         String loggedInUserEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User foundUser = userRepository.findUserByEmail(loggedInUserEmail);
 
+
+
         Booking newBooking = Booking.builder()
                 .title(requestDTO.getTitle())
                 .description(requestDTO.getDescription())
                 .creator(foundUser)
+                .bookingDate(requestDTO.getBookingDate())
                 .build();
+
+        log.info("Date of the booking: {}", newBooking.getBookingDate());
 
         Booking savedBooking = bookingRepository.save(newBooking);
         return CreateBookingResponseDTO.builder()

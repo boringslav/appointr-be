@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "bookings")
@@ -30,12 +31,15 @@ public class Booking {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = true)
     @JoinColumn(name = "creator", referencedColumnName = "id")
     private User creator;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = true)
     @JoinColumn(name = "customer", referencedColumnName = "id")
     private User customer;
+
+    @Column(name = "booking_date")
+    private String bookingDate;
 
 }
