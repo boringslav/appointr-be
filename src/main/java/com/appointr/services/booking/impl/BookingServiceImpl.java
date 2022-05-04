@@ -74,7 +74,6 @@ public class BookingServiceImpl implements BookingService {
         return response;
     }
 
-    //TODO - Check if the user who wants to update the booking is its creator
     public CreateBookingResponseDTO updateBooking(Long id, UpdateBookingRequestDTO newBookingData) throws Exception {
         Optional<Booking> oldBooking = bookingRepository.findById(id);
 
