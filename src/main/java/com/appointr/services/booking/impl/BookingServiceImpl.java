@@ -36,6 +36,7 @@ public class BookingServiceImpl implements BookingService {
                 .title(requestDTO.getTitle())
                 .description(requestDTO.getDescription())
                 .creator(foundUser)
+                .bookingDate(requestDTO.getBookingDate())
                 .build();
 
         Booking savedBooking = bookingRepository.save(newBooking);
@@ -118,6 +119,22 @@ public class BookingServiceImpl implements BookingService {
         return DeleteBookingResponseDTO.builder()
                 .id((Long) id)
                 .build();
+    }
+
+    @Transactional
+    public BookBookingResponseDTO book(Long id) throws Exception {
+        Optional<Booking> foundBooking = bookingRepository.findById(id);
+        String loggedUserEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User customer = userRepository.findUserByEmail(loggedUserEmail);
+
+        if(foundBooking.isEmpty()){
+            throw new Exception("Booking not found!");
+        }
+
+        Booking booking = foundBooking.get();
+        booking.setCustomer(customer);
+
+        return BookBookingResponseDTO.builder().customerId(customer.getId()).build();
     }
 
 }

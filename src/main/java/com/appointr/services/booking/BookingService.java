@@ -9,4 +9,5 @@ public interface BookingService {
     BookingDTO getBookingById(Long id) throws Exception;
     CreateBookingResponseDTO updateBooking(Long id, UpdateBookingRequestDTO updateBookingDataDTO) throws Exception;
     DeleteBookingResponseDTO deleteBooking(Long id) throws Exception;
+    BookBookingResponseDTO book(Long id) throws Exception;
 }
