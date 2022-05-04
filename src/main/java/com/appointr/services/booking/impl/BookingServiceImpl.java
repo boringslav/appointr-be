@@ -6,16 +6,12 @@ import com.appointr.repository.BookingRepository;
 import com.appointr.repository.UserRepository;
 import com.appointr.repository.entity.Booking;
 import com.appointr.repository.entity.User;
-import com.appointr.repository.entity.UserRole;
 import com.appointr.services.booking.BookingService;
 import com.google.common.collect.Streams;
 import lombok.AllArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -80,7 +76,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     //TODO - Check if the user who wants to update the booking is its creator
-    public CreateBookingResponseDTO updateBooking(Long id, UpdateBookingDataDTO newBookingData) throws Exception {
+    public CreateBookingResponseDTO updateBooking(Long id, UpdateBookingRequestDTO newBookingData) throws Exception {
         Optional<Booking> oldBooking = bookingRepository.findById(id);
 
         if (oldBooking.isEmpty()) {
