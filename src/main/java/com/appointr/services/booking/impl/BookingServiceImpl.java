@@ -100,18 +100,24 @@ public class BookingServiceImpl implements BookingService {
 
     }
 
-    /**
-     * TODO - Check if the user who wants to update the booking is its creator
-     * TODO -
-     *
-     * @param id
-     * @throws Exception could not execute statement; SQL [n/a]; constraint [fk63yud1c4pbg7n9xgtajdqrp3v];
-     *                   nested exception is org.hibernate.exception.ConstraintViolationException:
-     *                   could not execute statement
-     */
     @Transactional
-    public void deleteBooking(Long id) throws Exception {
+    public DeleteBookingResponseDTO deleteBooking(Long id) throws Exception {
+        Optional<Booking> foundBooking = bookingRepository.findById(id);
+        String loggedInUserEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (foundBooking.isEmpty()) {
+            throw new Exception("Booking not found!");
+        }
+
+        if (!loggedInUserEmail.equals(foundBooking.get().getCreator().getEmail())) {
+            throw new Exception("You are not the creator of the Booking!");
+        }
+
         userRepository.deleteById(id);
+
+        return DeleteBookingResponseDTO.builder()
+                .id((Long) id)
+                .build();
     }
 
 }

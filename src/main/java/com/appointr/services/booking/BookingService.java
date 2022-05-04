@@ -8,5 +8,5 @@ public interface BookingService {
     GetAllBookingsResponseDTO getAllBookings();
     BookingDTO getBookingById(Long id) throws Exception;
     CreateBookingResponseDTO updateBooking(Long id, UpdateBookingRequestDTO updateBookingDataDTO) throws Exception;
-    void deleteBooking(Long id) throws Exception;
+    DeleteBookingResponseDTO deleteBooking(Long id) throws Exception;
 }
