@@ -6,16 +6,12 @@ import com.appointr.repository.BookingRepository;
 import com.appointr.repository.UserRepository;
 import com.appointr.repository.entity.Booking;
 import com.appointr.repository.entity.User;
-import com.appointr.repository.entity.UserRole;
 import com.appointr.services.booking.BookingService;
 import com.google.common.collect.Streams;
 import lombok.AllArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -34,7 +30,6 @@ public class BookingServiceImpl implements BookingService {
     public CreateBookingResponseDTO createBooking(CreateBookingRequestDTO requestDTO) throws AuthenticationException {
 
         String loggedInUserEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        log.info("User : {}", loggedInUserEmail);
         User foundUser = userRepository.findUserByEmail(loggedInUserEmail);
 
         Booking newBooking = Booking.builder()
@@ -79,13 +74,20 @@ public class BookingServiceImpl implements BookingService {
         return response;
     }
 
-    //TODO - Check if the user who wants to update the booking is its creator
-    public CreateBookingResponseDTO updateBooking(Long id, UpdateBookingDataDTO newBookingData) throws Exception {
+    public CreateBookingResponseDTO updateBooking(Long id, UpdateBookingRequestDTO newBookingData) throws Exception {
         Optional<Booking> oldBooking = bookingRepository.findById(id);
+
+        String loggedInUserEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
 
         if (oldBooking.isEmpty()) {
             throw new Exception("Booking Not Found");
         }
+
+        if (!loggedInUserEmail.equals(oldBooking.get().getCreator().getEmail())) {
+            throw new Exception("You are not the creator of the booking!");
+        }
+
 
         Booking booking = oldBooking.get();
         booking.setTitle(newBookingData.getTitle());
@@ -98,18 +100,24 @@ public class BookingServiceImpl implements BookingService {
 
     }
 
-    /**
-     * TODO - Check if the user who wants to update the booking is its creator
-     * TODO -
-     * @param id
-     * @throws Exception
-     * could not execute statement; SQL [n/a]; constraint [fk63yud1c4pbg7n9xgtajdqrp3v];
-     * nested exception is org.hibernate.exception.ConstraintViolationException:
-     * could not execute statement
-     */
     @Transactional
-    public void deleteBooking(Long id) throws  Exception{
+    public DeleteBookingResponseDTO deleteBooking(Long id) throws Exception {
+        Optional<Booking> foundBooking = bookingRepository.findById(id);
+        String loggedInUserEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (foundBooking.isEmpty()) {
+            throw new Exception("Booking not found!");
+        }
+
+        if (!loggedInUserEmail.equals(foundBooking.get().getCreator().getEmail())) {
+            throw new Exception("You are not the creator of the Booking!");
+        }
+
         userRepository.deleteById(id);
+
+        return DeleteBookingResponseDTO.builder()
+                .id((Long) id)
+                .build();
     }
 
 }

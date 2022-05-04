@@ -1,13 +1,10 @@
 package com.appointr.controllers;
 
 import com.appointr.dto.booking.*;
-import com.appointr.dto.user.UserDTO;
-import com.appointr.repository.entity.Booking;
 import com.appointr.services.booking.impl.BookingServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -56,7 +53,7 @@ public class BookingController {
     @PutMapping("{id}")
     public ResponseEntity<CreateBookingResponseDTO> updateBooking(
             @PathVariable(value = "id") final long id,
-            @RequestBody UpdateBookingDataDTO bookingData) {
+            @RequestBody UpdateBookingRequestDTO bookingData) {
 
         try {
             CreateBookingResponseDTO response = bookingService.updateBooking(id, bookingData);

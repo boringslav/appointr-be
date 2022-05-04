@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateBookingDataDTO {
-    private String title;
-    private String description;
+public class DeleteBookingResponseDTO {
+    private long id;
 }
