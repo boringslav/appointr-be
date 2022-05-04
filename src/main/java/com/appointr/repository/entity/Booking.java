@@ -30,11 +30,11 @@ public class Booking {
     @Column(name = "description")
     private String description;
 
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "creator", referencedColumnName = "id")
     private User creator;
 
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "customer", referencedColumnName = "id")
     private User customer;
 
