@@ -61,8 +61,19 @@ public class BookingController {
         } catch (Exception err) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, err.getMessage());
         }
-
     }
+
+    @PutMapping("/book/{id}")
+    public ResponseEntity bookABooking(@PathVariable(value = "id") final long id) {
+
+        try {
+            BookBookingResponseDTO response = bookingService.book(id);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        }catch (Exception err) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, err.getMessage());
+        }
+    }
+
 
     @DeleteMapping("{id}")
     public ResponseEntity deleteBooking(
