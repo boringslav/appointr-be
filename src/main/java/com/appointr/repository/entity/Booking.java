@@ -35,7 +35,7 @@ public class Booking {
     @JoinColumn(name = "creator", referencedColumnName = "id")
     private User creator;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = true)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer", referencedColumnName = "id")
     private User customer;
 
