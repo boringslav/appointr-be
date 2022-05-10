@@ -114,7 +114,7 @@ public class BookingServiceImpl implements BookingService {
             throw new Exception("You are not the creator of the Booking!");
         }
 
-        userRepository.deleteById(id);
+        bookingRepository.deleteById(id);
 
         return DeleteBookingResponseDTO.builder()
                 .id((Long) id)

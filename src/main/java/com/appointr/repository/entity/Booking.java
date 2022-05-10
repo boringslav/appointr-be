@@ -31,11 +31,11 @@ public class Booking {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = true)
+    @ManyToOne()
     @JoinColumn(name = "creator", referencedColumnName = "id")
     private User creator;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "customer", referencedColumnName = "id")
     private User customer;
 
