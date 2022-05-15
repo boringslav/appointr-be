@@ -13,7 +13,6 @@ public class UserDTOConverter {
                 .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
-                .password(user.getPassword())
                 .role(user.getRole())
                 .build();
     }

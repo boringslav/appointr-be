@@ -49,7 +49,6 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     log.info("Username: {}", username);
                     log.info("Role: {}", role);
 
-                    log.info("Role is COMPANY: {}", role.equals("COMPANY"));
                     Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
                     authorities.add(new SimpleGrantedAuthority(role));
