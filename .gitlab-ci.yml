@@ -1,7 +1,7 @@
 stages:
   - build
   - test
-
+  - sonarqube-check
 build:
   stage: build
   script:
@@ -14,7 +14,7 @@ test:
     - ./gradlew test
     - ./gradlew.bat --stop
 
-sonarqube:
+sonarqube-check:
   stage: sonarqube-check
   artifacts:
     paths:
