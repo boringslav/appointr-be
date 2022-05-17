@@ -13,3 +13,16 @@ test:
   script:
     - ./gradlew test
     - ./gradlew.bat --stop
+
+sonarqube-check:
+  stage: sonarqube-check
+  artifacts:
+    paths:
+      - build/libs/*.jar
+  variables:
+    GIT_DEPTH: "0"
+  script: gradle build jacocoTestReport sonarqube -Dsonar.qualitygate.wait=true
+  allow_failure: true
+  dependencies:
+    - test
+  needs: [ "test" ]
