@@ -47,3 +47,11 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+sonarqube {
+    properties {
+        property "sonar.projectKey", "appointr-be"
+        property "sonar.qualitygate.wait", true
+        property "sonar.login", "admin"
+        property "sonar.password", "123456"
+    }
+}
