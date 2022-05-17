@@ -14,7 +14,7 @@ test:
     - ./gradlew test
     - ./gradlew.bat --stop
 
-sonarqube-check:
+sonarqube:
   stage: sonarqube-check
   artifacts:
     paths:
