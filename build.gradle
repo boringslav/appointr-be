@@ -41,6 +41,8 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-security"
     // https://mvnrepository.com/artifact/com.auth0/java-jwt
     implementation 'com.auth0:java-jwt:3.19.1'
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-websocket
+    implementation 'org.springframework.boot:spring-boot-starter-websocket:2.7.0'
 
 }
 
