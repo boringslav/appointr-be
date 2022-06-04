@@ -18,8 +18,8 @@ public class ChatController {
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 
-    @MessageMapping("/message") // /app/message
-    @SendTo("chatroom/public")
+    @MessageMapping("/message")
+    @SendTo("/topic/chatroom")
     private Message receivePublicMessage(@Payload Message message) {
         log.info(String.valueOf(message));
         return message;
