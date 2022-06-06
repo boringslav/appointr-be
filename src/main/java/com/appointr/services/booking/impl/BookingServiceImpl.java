@@ -30,7 +30,7 @@ public class BookingServiceImpl implements BookingService {
     public CreateBookingResponseDTO createBooking(CreateBookingRequestDTO requestDTO) throws AuthenticationException {
 
         String loggedInUserEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User foundUser = userRepository.findUserByEmail(loggedInUserEmail);
+        User foundUser = userRepository.findUserByEmail(loggedInUserEmail).get();
 
         Booking newBooking = Booking.builder()
                 .title(requestDTO.getTitle())
@@ -125,7 +125,7 @@ public class BookingServiceImpl implements BookingService {
     public BookBookingResponseDTO book(Long id) throws Exception {
         Optional<Booking> foundBooking = bookingRepository.findById(id);
         String loggedUserEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User customer = userRepository.findUserByEmail(loggedUserEmail);
+        User customer = userRepository.findUserByEmail(loggedUserEmail).get();
 
         if(foundBooking.isEmpty()){
             throw new Exception("Booking not found!");

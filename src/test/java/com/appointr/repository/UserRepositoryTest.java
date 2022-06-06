@@ -14,6 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import javax.persistence.EntityManager;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserRepositoryTest {
 
     @Autowired
-
     private UserRepository userRepository;
 
     @Autowired
@@ -39,7 +39,7 @@ class UserRepositoryTest {
                 .role(UserRole.ADMIN)
                 .build());
 
-        User actualUser = userRepository.findUserByEmail("bostoycontact@gmail.com");
+        Optional<User> actualUser = userRepository.findUserByEmail("bostoycontact@gmail.com");
 
         User expectedUser = User.builder()
                 .email("bostoycontact@gmail.com")
@@ -48,10 +48,29 @@ class UserRepositoryTest {
                 .role(UserRole.ADMIN)
                 .build();
 
+        User user = actualUser.get();
+        assertEquals(expectedUser.getName(), user.getName());
+        assertEquals(expectedUser.getEmail(), user.getEmail());
+        assertEquals(expectedUser.getRole(), user.getRole());
 
-        assertEquals(expectedUser.getName(), actualUser.getName());
-        assertEquals(expectedUser.getEmail(), actualUser.getEmail());
-        assertEquals(expectedUser.getRole(), actualUser.getRole());
+    }
+
+    @Test
+    void findUserById_shouldReturnUser_whenItExists() {
+        entityManager.persist(User.builder()
+                .email("bostoycontact@gmail.com")
+                .name("Borislav Stoyanov")
+                .password("123123")
+                .role(UserRole.ADMIN)
+                .build());
+
+        User expected = userRepository.findUserByEmail("bostoycontact@gmail.com").get();
+        User actual = userRepository.findUserById(expected.getId()).get();
+
+        assertEquals(expected.getEmail(), actual.getEmail());
+        assertEquals(expected.getName(), actual.getName());
+        assertEquals(expected.getRole(), actual.getRole());
+
 
     }
 }

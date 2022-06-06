@@ -1,9 +1,6 @@
 package com.appointr.services.user.impl;
 
-import com.appointr.dto.user.GetAllUsersResponseDTO;
-import com.appointr.dto.user.UserDTOConverter;
-import com.appointr.dto.user.UserSignUpRequestDTO;
-import com.appointr.dto.user.UserSignUpResponseDTO;
+import com.appointr.dto.user.*;
 import com.appointr.repository.UserRepository;
 import com.appointr.repository.entity.User;
 import com.appointr.repository.entity.UserRole;
@@ -21,6 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,14 +33,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findUserByEmail(email);
-        if (user == null) {
+        Optional<User> user = userRepository.findUserByEmail(email);
+        if (user.isEmpty()) {
             throw new UsernameNotFoundException("User not found in the database");
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(user.getRole().toString()));
+        authorities.add(new SimpleGrantedAuthority(user.get().getRole().toString()));
 
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
+        return new org.springframework.security.core.userdetails.User(user.get().getEmail(), user.get().getPassword(), authorities);
     }
 
     public UserSignUpResponseDTO signUp(UserSignUpRequestDTO requestDTO) {
@@ -77,5 +75,35 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .collect(Collectors.toList()));
 
         return response;
+    }
+
+    @Override
+    public UserDTO getUserById(Long id) throws Exception {
+        Optional<User> foundUser = userRepository.findUserById(id);
+        if (foundUser.isEmpty()) {
+            throw new Exception("User Not Found");
+        }
+        User user = foundUser.get();
+        return UserDTO.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .name(user.getEmail())
+                .build();
+    }
+
+    @Override
+    public UserDTO getUserByEmail(String email) throws Exception {
+        Optional<User> foundUser = userRepository.findUserByEmail(email);
+        if(foundUser.isEmpty()) {
+            throw new Exception("User Not Found");
+        }
+        User user = foundUser.get();
+        return UserDTO.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .name(user.getEmail())
+                .build();
     }
 }
