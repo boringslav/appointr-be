@@ -24,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserRepositoryTest {
 
     @Autowired
-
     private UserRepository userRepository;
 
     @Autowired
@@ -40,7 +39,7 @@ class UserRepositoryTest {
                 .role(UserRole.ADMIN)
                 .build());
 
-        User actualUser = userRepository.findUserByEmail("bostoycontact@gmail.com");
+        Optional<User> actualUser = userRepository.findUserByEmail("bostoycontact@gmail.com");
 
         User expectedUser = User.builder()
                 .email("bostoycontact@gmail.com")
@@ -49,10 +48,10 @@ class UserRepositoryTest {
                 .role(UserRole.ADMIN)
                 .build();
 
-
-        assertEquals(expectedUser.getName(), actualUser.getName());
-        assertEquals(expectedUser.getEmail(), actualUser.getEmail());
-        assertEquals(expectedUser.getRole(), actualUser.getRole());
+        User user = actualUser.get();
+        assertEquals(expectedUser.getName(), user.getName());
+        assertEquals(expectedUser.getEmail(), user.getEmail());
+        assertEquals(expectedUser.getRole(), user.getRole());
 
     }
 
@@ -65,7 +64,7 @@ class UserRepositoryTest {
                 .role(UserRole.ADMIN)
                 .build());
 
-        User expected = userRepository.findUserByEmail("bostoycontact@gmail.com");
+        User expected = userRepository.findUserByEmail("bostoycontact@gmail.com").get();
         User actual = userRepository.findUserById(expected.getId()).get();
 
         assertEquals(expected.getEmail(), actual.getEmail());

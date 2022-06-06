@@ -4,6 +4,7 @@ import com.appointr.dto.user.GetAllUsersResponseDTO;
 import com.appointr.dto.user.UserDTO;
 import com.appointr.dto.user.UserSignUpRequestDTO;
 import com.appointr.dto.user.UserSignUpResponseDTO;
+import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
