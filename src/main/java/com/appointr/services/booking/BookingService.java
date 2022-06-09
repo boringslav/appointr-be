@@ -2,7 +2,9 @@ package com.appointr.services.booking;
 
 import com.appointr.dto.booking.*;
 import org.apache.tomcat.websocket.AuthenticationException;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface BookingService {
     CreateBookingResponseDTO createBooking(CreateBookingRequestDTO requestDTO) throws AuthenticationException;
     GetAllBookingsResponseDTO getAllBookings();
