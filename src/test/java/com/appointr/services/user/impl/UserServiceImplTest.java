@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -23,11 +26,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-class UserServiceImplTest {
+class UserServiceImplTest  {
 
     @Autowired
-    private UserService userService;
-
+    private UserServiceImpl userService;
 
     @Test
     void getAllUsers() {
@@ -86,10 +88,23 @@ class UserServiceImplTest {
 
 
         UserSignUpResponseDTO savedUser = userService.signUp(signUpDTO);
-
-        UserDTO foundUser = userService.getUserByEmail(signUpDTO.getEmail());
+        UserDTO foundUser = userService.getUserByEmail("testEmail@gmail.com");
         assertEquals(foundUser.getEmail(), savedUser.getEmail());
 
     }
 
+    @Test
+    public void loadUserByUsername() throws UsernameNotFoundException {
+        UserSignUpRequestDTO signUpDTO = UserSignUpRequestDTO.builder()
+                .email("testEmail@gmail.com")
+                .name("Test Name")
+                .role(UserRole.ADMIN)
+                .password("123456")
+                .build();
+
+        UserSignUpResponseDTO savedUser = userService.signUp(signUpDTO);
+
+        UserDetails userDetails = userService.loadUserByUsername(signUpDTO.getEmail());
+        assertEquals(savedUser.getEmail(), userDetails.getUsername());
+    }
 }
