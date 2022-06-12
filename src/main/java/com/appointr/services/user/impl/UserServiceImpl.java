@@ -9,6 +9,7 @@ import com.google.common.collect.Streams;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -106,4 +107,32 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .name(user.getEmail())
                 .build();
     }
+
+    @Override
+    public UserDTO editMyProfile(EditUserDTORequest newData) throws Exception {
+        String loggedInUserEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User foundUser = userRepository.findUserByEmail(loggedInUserEmail).get();
+
+        if(!newData.getEmail().equals(null)) {
+            foundUser.setEmail(newData.getEmail());
+        }
+        if(!newData.getName().equals(null)) {
+            foundUser.setName(newData.getName());
+        }
+        if(!newData.getPassword().equals(null)) {
+            foundUser.setPassword(passwordEncoder.encode(newData.getPassword()));
+        }
+
+        User savedUser = userRepository.save(foundUser);
+
+        return UserDTOConverter.convertToDTO(savedUser);
+    }
+
+    @Override
+    public UserDTO getMyProfile() throws Exception {
+        String loggedInUserEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User foundUser = userRepository.findUserByEmail(loggedInUserEmail).get();
+        return UserDTOConverter.convertToDTO(foundUser);
+    }
+
 }
