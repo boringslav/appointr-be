@@ -1,10 +1,9 @@
 package com.appointr.controllers;
 
 
-import com.appointr.dto.user.GetAllUsersResponseDTO;
-import com.appointr.dto.user.UserDTO;
-import com.appointr.dto.user.UserSignUpRequestDTO;
-import com.appointr.dto.user.UserSignUpResponseDTO;
+import ch.qos.logback.core.encoder.EchoEncoder;
+import com.appointr.dto.user.*;
+import com.appointr.repository.entity.User;
 import com.appointr.services.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,6 +12,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.HeuristicCommitException;
 import javax.validation.Valid;
 
 
@@ -45,6 +45,29 @@ public class UserController {
     ) {
         UserSignUpResponseDTO response = userService.signUp(signUpRequestObject);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PutMapping("/edit-me")
+    public ResponseEntity<UserDTO> updateMe(
+            @RequestBody @Valid EditUserDTORequest newData
+            ) throws Exception {
+        try {
+            UserDTO response = userService.editMyProfile(newData);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        }
+        catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+
+    }
+
+    @GetMapping("/my-profile")
+    public ResponseEntity<UserDTO> getMyProfile() {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(userService.getMyProfile());
+        }catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
     }
 
 }
