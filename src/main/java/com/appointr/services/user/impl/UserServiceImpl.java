@@ -61,7 +61,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return UserSignUpResponseDTO.builder()
                 .id(savedUser.getId())
                 .email(savedUser.getEmail())
-                .password(savedUser.getPassword())
                 .name(savedUser.getName())
                 .role(savedUser.getRole())
                 .build();
