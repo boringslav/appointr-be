@@ -15,11 +15,9 @@ import java.util.Date;
 @AllArgsConstructor
 public class CreateBookingRequestDTO {
     @NotBlank
-    @Length(min = 2, max = 20)
     private String title;
 
     @NotBlank
-    @Length(min = 10, max = 50)
     private String description;
 
     private String bookingDate;

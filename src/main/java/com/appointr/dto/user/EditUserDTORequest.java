@@ -18,7 +18,6 @@ public class EditUserDTORequest {
     @Column(name="email", unique = true)
     private String email;
 
-    @Length(min=6, max=20)
     @Column(name="password")
     private String password;
 

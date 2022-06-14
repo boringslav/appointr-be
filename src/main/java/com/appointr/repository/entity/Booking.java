@@ -23,11 +23,9 @@ public class Booking {
     private Long id;
 
     @NotBlank
-    @Length(min = 2, max = 20)
     @Column(name = "title")
     private String title;
 
-    @Length(min = 10, max = 50)
     @Column(name = "description")
     private String description;
 
