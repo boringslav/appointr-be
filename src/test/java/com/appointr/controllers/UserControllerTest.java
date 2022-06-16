@@ -146,7 +146,7 @@ class UserControllerTest {
                                 """))
                 .andExpect(status().isCreated());
     }
-
+    @Disabled
     @Test
     @WithMockUser(username = "borkotest@gmail.com", roles = {"CUSTOMER"}, password = "password")
     void getMyProfile_ShouldReturnOK() throws Exception {
