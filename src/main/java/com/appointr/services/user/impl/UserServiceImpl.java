@@ -134,4 +134,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return UserDTOConverter.convertToDTO(foundUser);
     }
 
+    @Override
+    public DeleteUserResponseDTO deleteMyProfile() throws Exception {
+        String loggedInUserEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User foundUser = userRepository.findUserByEmail(loggedInUserEmail).get();
+        userRepository.deleteById(foundUser.getId());
+        return DeleteUserResponseDTO.builder().id(foundUser.getId()).build();
+    }
+
 }

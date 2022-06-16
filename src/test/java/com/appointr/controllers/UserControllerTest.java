@@ -72,7 +72,6 @@ class UserControllerTest {
         mockMvc.perform(get("/users/1")).andExpect(status().isForbidden());
     }
 
-
     @Test
     @WithMockUser(username = "borkotest@gmail.com", roles = {"COMPANY"}, password = "password")
     void signUp_Should_returnCreated_WhenProvidedWithCorrectCredentials() throws Exception {
@@ -93,9 +92,10 @@ class UserControllerTest {
                                 	"role": "COMPANY"
                                 }
                                 """
-                ))
+                        ))
                 .andExpect(status().isCreated());
     }
+
     @Test
     @WithMockUser(username = "borkotest@gmail.com", roles = {"CUSTOMER"}, password = "password")
     void signUp_Should_returnBadRequest_WhenNotProvidedWithCorrectCredentials() throws Exception {
@@ -148,6 +148,17 @@ class UserControllerTest {
     }
 
     @Test
-    void getMyProfile() {
+    @WithMockUser(username = "borkotest@gmail.com", roles = {"CUSTOMER"}, password = "password")
+    void getMyProfile_ShouldReturnOK() throws Exception {
+        when(userService.getMyProfile()).thenReturn(UserDTO.builder()
+                .id(1L)
+                .name("borko")
+                .email("borkotest@gmail.com")
+                .role(UserRole.CUSTOMER)
+                .build());
+
+        mockMvc.perform(get("/users/my-profile")
+                .contentType("application/json"))
+                .andExpect(status().isOk());
     }
 }
