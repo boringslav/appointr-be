@@ -69,5 +69,13 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
+    @DeleteMapping("/my-profile")
+    public ResponseEntity<DeleteUserResponseDTO> deleteMyProfile() {
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(userService.deleteMyProfile());
+        }catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+    }
 
 }

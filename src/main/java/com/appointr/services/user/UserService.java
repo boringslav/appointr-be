@@ -13,4 +13,5 @@ public interface UserService {
     UserDTO getUserByEmail(@Email @NotNull String email) throws Exception;
     UserDTO editMyProfile(EditUserDTORequest newData) throws Exception;
     UserDTO getMyProfile() throws Exception;
+    DeleteUserResponseDTO deleteMyProfile() throws Exception;
 }
